@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://developerforce.github.io/LightningNowWorkshop/Exercise_d1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="https://developerforce.github.io/assets/ico/favicon.ico">
+
+    <title>Lightning Now Workshop</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./Lightning Now Workshop AM1_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./Lightning Now Workshop AM1_files/styles.css" rel="stylesheet">
+    <link href="./Lightning Now Workshop AM1_files/syntax.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script id="twitter-wjs" src="./Lightning Now Workshop AM1_files/widgets.js.download"></script><script async="" src="./Lightning Now Workshop AM1_files/analytics.js.download"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-721308-2', 'developerforce.github.io');
+      ga('send', 'pageview');
+    </script>
+<script type="text/javascript" charset="utf-8" async="" src="./Lightning Now Workshop AM1_files/button.90facfc7dd48c9c8c4f1fc94e137b515.js.download"></script></head>
+
+<body>
+
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://developerforce.github.io/LightningNowWorkshop/index.html">lightning<span class="sfdc">NOW</span>tour</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/developerforce/LightningNowWorkshop"><img src="./Lightning Now Workshop AM1_files/icon-github.png" style="border: none;margin: -4px 0;height: 28px;width: 28px;">
+                    GitHub
+                    Project</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
+<div class="container">
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-8">
+        <h2><span class="exercise">Exercise 1</span>Prepare Your Salesforce Environment</h2>
+        <!--<hr/>-->
+        <p>You will be using this environment in the workshop. My Domain must be deployed in your environment in order to complete the Programmatic exercises.</p>
+
+<ol>
+  <li>Sign up for the <a href="https://developer.salesforce.com/promotions/orgs/lightningnow/">Lightning Now Tour Workshop developer org</a>.</li>
+  <li>When you receive your Signup confirmation email, Login to your new org and set your password.</li>
+  <li>Define your Domain name in your Lightning Adoption Workshop Org
+    <ol>
+      <li>From Setup, enter My Domain in the <code class="highlighter-rouge">Quick Find</code> box, then select <strong>My Domain</strong>.</li>
+      <li>Enter the subdomain name you want to use within the sample URL. For example, if a company called Universal Containers uses the subdomain <code class="highlighter-rouge">universalcontainers</code>, the company’s login URL is <code class="highlighter-rouge">https://universalcontainers.my.salesforce.com/</code>. Your name can include up to 40 letters, numbers, and hyphens.
+ You can’t use these reserved words for subdomains:
+        <ol>
+          <li>www</li>
+          <li>salesforce</li>
+          <li>heroku</li>
+          <li>You can’t start the domain name with:</li>
+          <li>root</li>
+          <li>status</li>
+          <li>a hyphen (-)</li>
+        </ol>
+      </li>
+      <li>Click <strong>Check Availability</strong>. If your name is already taken, choose a different one.</li>
+      <li>Click <strong>Register Domain</strong>.</li>
+      <li>You receive an email when your domain name is ready for testing. This can take a few minutes.
+        <ol>
+          <li>The new subdomain is only available after you <strong>test</strong> and <strong>deploy</strong> it. When you receive the “Your Domain is Ready for Testing” email, go to <strong>Setup</strong> &gt; <strong>My Domain</strong> &gt; and select <strong>Log in</strong> to test your new domain.</li>
+        </ol>
+      </li>
+      <li>Once you have used the <strong>Log In</strong> button to test your domain, you can deploy to your users by selecting the <strong>Deploy to Users</strong> button and then clicking <strong>OK</strong>. This makes your domain available and also enables you to use Custom and Managed components to build in Lightning!</li>
+    </ol>
+  </li>
+  <li><strong>Save</strong> this image locally as a JPG, it will be used later for an App logo in the workshop.  <a href="https://www.google.com/url?sa=i&amp;rct=j&amp;q=&amp;esrc=s&amp;source=images&amp;cd=&amp;ved=0ahUKEwjU9f3W46TSAhUC12MKHVNZAFEQjRwIBw&amp;url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FFile%3AHuman-go-home.svg&amp;psig=AFQjCNHZTidjLtzKbVqEq_7zdzS_5Hr4Ew&amp;ust=1487889819345529">https://en.wikipedia.org/wiki/File:Human-go-home.svg</a></li>
+</ol>
+
+<div class="row" style="margin-top:40px;">
+<div class="col-sm-12">
+<a href="https://developerforce.github.io/LightningNowWorkshop/TOC.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Previous</a>
+<a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d2.html" class="btn btn-default pull-right">Next <i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
+</div>
+
+
+
+<!--         <div class="row" style="margin-top: 30px;">
+            <div class="col-xs-12">
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'salesforcelightningtutorial'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div> -->
+
+
+    </div>
+
+    <div class="col-xs-12 col-sm-4 right-nav">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="font-variant:small-caps;font-size: 18px;">exercises</div>
+            <h4 class="bump-right">Declarative Exercises</h4>
+            <ol class="list-group">
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d1.html">Setup your Salesforce Org</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d2.html">Evaluate Lightning, Create Permission Set &amp; Enable Lightning</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d3.html">Make your Classic App available in Lightning &amp; Explore Lightning Experience</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d4.html">Customize Business Processes and Report Charts</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d5.html">Create a new Dreamhouse Lightning Console App</a></li>
+            </ol>
+            <h4 class="bump-right">Programmatic Exercises</h4>
+            <ol class="list-group">
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_1.html">Styling a Visualforce page for Lightning Experience</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_2.html">Conditionally Rendering Visualforce Pages for the Underlying UX Environment</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_3.html">Using a Visualforce Page as a Component in a Lightning Page</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_4.html">Creating a Hello World Lightning Component</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_5.html">Creating a “Similar Properties” Lightning Component</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_6.html">Leveraging force:recordPreview</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_7.html">Using Lightning Components Everywhere</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_8.html">Using Lightning Components in Visualforce</a></li>
+            </ol>
+            <hr>
+            <div style="margin: -8px 0 12px 14px">
+                <a href="https://developerforce.github.io/LightningNowWorkshop/next.html">Next Steps</a>
+            </div>
+        </div>
+<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Lightning Now Workshop AM1_files/tweet_button.5b6375bb17bd9edb2f4e7f8f12971999.en.html" style="position: static; visibility: visible; width: 75px; height: 28px;" data-url="http://developerforce.github.io/LightningAdoptionWorkshop"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="container">
+    <div id="footer">
+        <p class="text-muted">lightning<span class="sfdc">NOW</span>tour - 2017</p>
+    </div>    <!-- Site footer -->
+</div>
+
+
+<script src="./Lightning Now Workshop AM1_files/jquery.js.download"></script>
+<script src="./Lightning Now Workshop AM1_files/bootstrap.min.js.download"></script>
+
+
+
+<iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./Lightning Now Workshop AM1_files/saved_resource.html"></iframe></body></html>

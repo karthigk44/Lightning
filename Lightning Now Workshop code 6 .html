@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://developerforce.github.io/LightningNowWorkshop/Exercise_6.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="https://developerforce.github.io/assets/ico/favicon.ico">
+
+    <title>Lightning Now Workshop</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./Lightning Now Workshop code 6 _files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./Lightning Now Workshop code 6 _files/styles.css" rel="stylesheet">
+    <link href="./Lightning Now Workshop code 6 _files/syntax.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script id="twitter-wjs" src="./Lightning Now Workshop code 6 _files/widgets.js.download"></script><script async="" src="./Lightning Now Workshop code 6 _files/analytics.js.download"></script><script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-721308-2', 'developerforce.github.io');
+      ga('send', 'pageview');
+    </script>
+<script type="text/javascript" charset="utf-8" async="" src="./Lightning Now Workshop code 6 _files/button.90facfc7dd48c9c8c4f1fc94e137b515.js.download"></script></head>
+
+<body>
+
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://developerforce.github.io/LightningNowWorkshop/index.html">lightning<span class="sfdc">NOW</span>tour</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://github.com/developerforce/LightningNowWorkshop"><img src="./Lightning Now Workshop code 6 _files/icon-github.png" style="border: none;margin: -4px 0;height: 28px;width: 28px;">
+                    GitHub
+                    Project</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
+<div class="container">
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-8">
+        <h2><span class="exercise">Exercise 6</span>Data Binding with force:recordPreview (Developer Orgs Only)</h2>
+        <!--<hr/>-->
+        <h3 id="exercise-goals">Exercise Goals</h3>
+
+<ul>
+  <li>Leverage Lightning Data Service to read and update records without an Apex Controller</li>
+  <li>Understand cross component communication</li>
+</ul>
+
+<h3 id="step-1---leverage-forcerecordpreview-to-bind-the-data">Step 1 - Leverage force:recordPreview to Bind the Data</h3>
+<ol>
+  <li>In the Developer Console, switch to the <strong>SimilarProperties</strong> component markup.</li>
+  <li>
+    <p>Add a new line following the last <code class="highlighter-rouge">&lt;aura:attribute&gt;</code> on line 4 and paste:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code> <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"property"</span> <span class="na">type=</span><span class="s">"Property__c"</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"remoteRecordId"</span> <span class="na">type=</span><span class="s">"Id"</span> <span class="nt">/&gt;</span>
+ <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"showDialog"</span> <span class="na">type=</span><span class="s">"String"</span> <span class="na">default=</span><span class="s">"false"</span> <span class="nt">/&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Make another new line below the <code class="highlighter-rouge">&lt;aura:handler&gt;</code> tag (currently line 8, if your line numbers match) and add:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code> <span class="nt">&lt;force:recordPreview</span> <span class="na">aura:id=</span><span class="s">"propertyService"</span> 
+                      <span class="na">recordId=</span><span class="s">"{!v.recordId}"</span> 
+                      <span class="na">targetRecord=</span><span class="s">"{!v.property}"</span> 
+                      <span class="na">recordUpdated=</span><span class="s">"{!c.doSearch}"</span> 
+                      <span class="na">layoutType=</span><span class="s">"FULL"</span> <span class="nt">/&gt;</span> 
+</code></pre>
+    </div>
+  </li>
+  <li>Save the file.</li>
+  <li>Click on the Helper tile on the right-hand side of the Developer Console.</li>
+  <li>Select all and delete the default contents of the Helper.</li>
+  <li>
+    <p>Paste the following into the helper:</p>
+
+    <div class="language-js highlighter-rouge"><pre class="highlight"><code> <span class="p">({</span>
+     <span class="na">getProps</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">)</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">recId</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.recordId"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">compValue</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.searchCriteria"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">action</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"c.getSimilarProperties"</span><span class="p">);</span>
+         <span class="nx">action</span><span class="p">.</span><span class="nx">setParams</span><span class="p">({</span>
+             <span class="na">recordId</span><span class="p">:</span> <span class="nx">recId</span><span class="p">,</span>
+             <span class="na">searchCriteria</span><span class="p">:</span> <span class="nx">compValue</span>
+         <span class="p">});</span>
+         <span class="nx">action</span><span class="p">.</span><span class="nx">setCallback</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">){</span>
+             <span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">getReturnValue</span><span class="p">();</span>
+             <span class="nx">component</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.similarProperties"</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+         <span class="p">});</span>
+         <span class="nx">$A</span><span class="p">.</span><span class="nx">enqueueAction</span><span class="p">(</span><span class="nx">action</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">})</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Switch to the SimilarProperties controller tab.</li>
+  <li>
+    <p>Replace the contents with:</p>
+
+    <div class="language-js highlighter-rouge"><pre class="highlight"><code> <span class="p">({</span>
+     <span class="na">doInit</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">helper</span><span class="p">)</span> <span class="p">{</span>
+         <span class="nx">helper</span><span class="p">.</span><span class="nx">getProps</span><span class="p">(</span><span class="nx">component</span><span class="p">);</span>
+     <span class="p">},</span>
+     <span class="na">doSearch</span> <span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">component</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">helper</span><span class="p">)</span> <span class="p">{</span>
+         <span class="nx">helper</span><span class="p">.</span><span class="nx">getProps</span><span class="p">(</span><span class="nx">component</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">})</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Save the file(s).</li>
+  <li>Reload the Property Record Detail page.</li>
+  <li>Change the Price of the Record to be +/- more than 100000.</li>
+  <li>Click Save and watch the Similar Properties component update.</li>
+</ol>
+
+<h3 id="step-2---creating-a-record-detail-component">Step 2 - Creating a Record Detail Component</h3>
+<ol>
+  <li>In the Dev Console, create a new Lightning Component (File &gt; New &gt; Lightning Component).</li>
+  <li>Give the component a name of <strong>SimilarProperty</strong>, and leave all of the checkboxes <strong>unchecked</strong>.</li>
+  <li>
+    <p>Replace the contents of the <strong>SimilarProperty.cmp</strong> file with:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code> <span class="nt">&lt;aura:component</span> <span class="na">implements=</span><span class="s">"force:hasRecordId"</span> <span class="na">access=</span><span class="s">"global"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"propertyId"</span> <span class="na">type=</span><span class="s">"Id"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"selectedProperty"</span> <span class="na">type=</span><span class="s">"Property__c"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"showDialog"</span> <span class="na">type=</span><span class="s">"String"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"remoteRecordId"</span> <span class="na">type=</span><span class="s">"Id"</span> <span class="nt">/&gt;</span>
+	
+     <span class="nt">&lt;force:recordPreview</span> <span class="na">aura:id=</span><span class="s">"propertyRecord"</span> 
+                          <span class="na">recordId=</span><span class="s">"{!v.propertyId}"</span> 
+                          <span class="na">targetRecord=</span><span class="s">"{!v.selectedProperty}"</span> 
+                          <span class="na">layoutType=</span><span class="s">"FULL"</span> <span class="nt">/&gt;</span>
+	
+     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-media"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-media__figure"</span><span class="nt">&gt;</span>
+             <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"{!v.selectedProperty.Thumbnail__c}"</span> <span class="na">class=</span><span class="s">"slds-avatar--large slds-avatar--circle"</span> <span class="na">alt=</span><span class="s">"{!v.selectedProperty.Title_c}"</span> <span class="nt">/&gt;</span>
+         <span class="nt">&lt;/div&gt;</span>
+         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-media__body"</span><span class="nt">&gt;</span>
+             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-grid"</span><span class="nt">&gt;</span>
+                 <span class="nt">&lt;a</span> <span class="na">data-record=</span><span class="s">"{!v.selectedProperty.Id}"</span> <span class="na">onclick=</span><span class="s">"{!c.navToRecord}"</span><span class="nt">&gt;</span>
+                     <span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">"slds-text-heading--small slds-m-bottom--xx-small"</span><span class="nt">&gt;</span>{!v.selectedProperty.Name}<span class="nt">&lt;/h3&gt;</span>
+                 <span class="nt">&lt;/a&gt;</span>
+                 <span class="nt">&lt;lightning:buttonIcon</span> <span class="na">iconName=</span><span class="s">"utility:edit"</span> <span class="na">class=</span><span class="s">"slds-col--bump-left"</span> <span class="na">variant=</span><span class="s">"bare"</span> <span class="na">alternativeText=</span><span class="s">"Edit Record"</span> <span class="na">onclick=</span><span class="s">"{!c.editMini}"</span> <span class="na">value=</span><span class="s">"{!v.selectedProperty.Id}"</span> <span class="nt">/&gt;</span>
+             <span class="nt">&lt;/div&gt;</span>
+             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-m-top--small"</span><span class="nt">&gt;</span>
+                 <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"slds-grid slds-wrap"</span><span class="nt">&gt;</span>
+                     <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"slds-list__item slds-size--1-of-2"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"slds-text-color--weak slds-m-right--small"</span><span class="nt">&gt;</span>Beds:<span class="nt">&lt;/span&gt;</span> {!v.selectedProperty.Beds__c}<span class="nt">&lt;/li&gt;</span>
+                     <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"slds-list__item slds-size--1-of-2"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"slds-text-color--weak slds-m-right--small"</span><span class="nt">&gt;</span>Baths:<span class="nt">&lt;/span&gt;</span> {!v.selectedProperty.Baths__c}<span class="nt">&lt;/li&gt;</span>
+                     <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"slds-list__item slds-size--1-of-2"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"slds-text-color--weak slds-m-right--small"</span><span class="nt">&gt;</span>Price:<span class="nt">&lt;/span&gt;</span> {!v.selectedProperty.Price__c}<span class="nt">&lt;/li&gt;</span>
+                     <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"slds-list__item slds-size--1-of-2"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"slds-text-color--weak slds-m-right--small"</span><span class="nt">&gt;</span>Status:<span class="nt">&lt;/span&gt;</span> {!v.selectedProperty.Status__c}<span class="nt">&lt;/li&gt;</span>
+                 <span class="nt">&lt;/ul&gt;</span>
+             <span class="nt">&lt;/div&gt;</span>
+         <span class="nt">&lt;/div&gt;</span>
+     <span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;/aura:component&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Click on the Controller tile to create <strong>SimilarPropertyController.js</strong>.</li>
+  <li>
+    <p>Replace the contents with:</p>
+
+    <div class="language-js highlighter-rouge"><pre class="highlight"><code> <span class="p">({</span>
+     <span class="na">editMini</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">helper</span><span class="p">)</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">recId</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.propertyId"</span><span class="p">);</span>
+         <span class="nx">component</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.remoteRecordId"</span><span class="p">,</span> <span class="nx">recId</span><span class="p">);</span>
+         <span class="nx">component</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.showDialog"</span><span class="p">,</span> <span class="s2">"true"</span><span class="p">);</span>
+     <span class="p">},</span>
+     <span class="na">navToRecord</span> <span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">component</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">helper</span><span class="p">)</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">selectedItem</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">;</span>
+         <span class="kd">var</span> <span class="nx">recId</span> <span class="o">=</span> <span class="nx">selectedItem</span><span class="p">.</span><span class="nx">dataset</span><span class="p">.</span><span class="nx">record</span><span class="p">;</span>
+         <span class="kd">var</span> <span class="nx">navEvt</span> <span class="o">=</span> <span class="nx">$A</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"e.force:navigateToSObject"</span><span class="p">);</span>
+         <span class="nx">navEvt</span><span class="p">.</span><span class="nx">setParams</span><span class="p">({</span>
+             <span class="s2">"recordId"</span><span class="p">:</span> <span class="nx">recId</span>
+         <span class="p">});</span>
+         <span class="nx">navEvt</span><span class="p">.</span><span class="nx">fire</span><span class="p">();</span>
+   	<span class="p">}</span>
+ <span class="p">})</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Save the file(s).</li>
+  <li>Switch to the <strong>SimilarProperties.cmp</strong> tab in the Dev Console.</li>
+  <li>
+    <p>Replace the <strong>contents</strong> of <code class="highlighter-rouge">&lt;li class="slds-list__item"&gt;</code> with:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code> <span class="nt">&lt;c:SimilarProperty</span> <span class="na">propertyId=</span><span class="s">"{!item.Id}"</span> <span class="na">selectedProperty=</span><span class="s">"{!item}"</span> <span class="na">remoteRecordId=</span><span class="s">"{!v.remoteRecordId}"</span> <span class="na">showDialog=</span><span class="s">"{!v.showDialog}"</span> <span class="nt">/&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Save the file.</li>
+  <li>Refresh the Property Record Detail page. Notice that “nothing” has changed.</li>
+</ol>
+
+<h3 id="step-3---add-a-custom-edit-view">Step 3 - Add a Custom Edit View</h3>
+<ol>
+  <li>In the Dev Console, create a new Lightning Component named <strong>SimilarPropertyEdit</strong>. Leave all of the checkboxes <strong>unchecked</strong>.</li>
+  <li>
+    <p>Replace the contents of the file with:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code> <span class="nt">&lt;aura:component</span> <span class="nt">&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"showDialog"</span> <span class="na">type=</span><span class="s">"String"</span> <span class="na">default=</span><span class="s">"false"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"remoteRecordId"</span> <span class="na">type=</span><span class="s">"Id"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:attribute</span> <span class="na">name=</span><span class="s">"selectedProperty"</span> <span class="na">type=</span><span class="s">"Property__c"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:handler</span> <span class="na">name=</span><span class="s">"change"</span> <span class="na">value=</span><span class="s">"{!v.showDialog}"</span> <span class="na">action=</span><span class="s">"{!c.toggleDialog}"</span> <span class="nt">/&gt;</span>
+     <span class="nt">&lt;aura:handler</span> <span class="na">name=</span><span class="s">"change"</span> <span class="na">value=</span><span class="s">"{!v.remoteRecordId}"</span> <span class="na">action=</span><span class="s">"{!c.getRecord}"</span> <span class="nt">/&gt;</span>
+	
+     <span class="nt">&lt;force:recordPreview</span> <span class="na">aura:id=</span><span class="s">"editRecord"</span>
+                          <span class="na">targetRecord=</span><span class="s">"{!v.selectedProperty}"</span>
+                          <span class="na">fields=</span><span class="s">"Id,Name,Beds__c,Baths__c,Price__c,Status__c"</span>
+                          <span class="na">mode=</span><span class="s">"EDIT"</span> <span class="nt">/&gt;</span>
+	
+     <span class="nt">&lt;div</span> <span class="na">aura:id=</span><span class="s">"editDialog"</span> <span class="na">role=</span><span class="s">"dialog"</span> <span class="na">tabindex=</span><span class="s">"-1"</span> <span class="na">aria-labelledby=</span><span class="s">"header43"</span> <span class="na">class=</span><span class="s">"slds-modal"</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-modal__container"</span><span class="nt">&gt;</span>
+             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-modal__header"</span><span class="nt">&gt;</span>
+                 <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"slds-button slds-modal__close "</span> <span class="na">title=</span><span class="s">"Close"</span> <span class="na">onclick=</span><span class="s">"{!c.toggleDialog}"</span><span class="nt">&gt;</span>
+                     <span class="nt">&lt;lightning:icon</span> <span class="na">iconName=</span><span class="s">"utility:close"</span> <span class="na">variant=</span><span class="s">"bare"</span> <span class="nt">&gt;&lt;/lightning:icon&gt;</span>
+                     <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"slds-assistive-text"</span><span class="nt">&gt;</span>Close<span class="nt">&lt;/span&gt;</span>
+                 <span class="nt">&lt;/button&gt;</span>
+                 <span class="nt">&lt;h2</span> <span class="na">id=</span><span class="s">"header43"</span> <span class="na">class=</span><span class="s">"slds-text-heading--medium"</span><span class="nt">&gt;</span>Edit Record<span class="nt">&lt;/h2&gt;</span>
+             <span class="nt">&lt;/div&gt;</span>
+             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-modal__content slds-p-around--medium slds-grid slds-wrap slds-grid--align-spread"</span><span class="nt">&gt;</span>
+                 <span class="nt">&lt;lightning:input</span> <span class="na">aura:id=</span><span class="s">"propName"</span> <span class="na">name=</span><span class="s">"propName"</span> <span class="na">label=</span><span class="s">"Property Name"</span> <span class="na">required=</span><span class="s">"true"</span> <span class="na">value=</span><span class="s">"{!v.selectedProperty.Name}"</span> <span class="na">class=</span><span class="s">"slds-size--1-of-1 slds-p-horizontal--x-small"</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;lightning:input</span> <span class="na">aura:id=</span><span class="s">"propBeds"</span> <span class="na">name=</span><span class="s">"propBeds"</span> <span class="na">label=</span><span class="s">"Beds"</span> <span class="na">value=</span><span class="s">"{!v.selectedProperty.Beds__c}"</span> <span class="na">class=</span><span class="s">"slds-size--1-of-2 slds-p-horizontal--x-small"</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;lightning:input</span> <span class="na">aura:id=</span><span class="s">"propBaths"</span> <span class="na">name=</span><span class="s">"propBaths"</span> <span class="na">label=</span><span class="s">"Baths"</span> <span class="na">value=</span><span class="s">"{!v.selectedProperty.Baths__c}"</span> <span class="na">class=</span><span class="s">"slds-size--1-of-2 slds-p-horizontal--x-small"</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;lightning:input</span> <span class="na">aura:id=</span><span class="s">"propPrice"</span> <span class="na">name=</span><span class="s">"propPrice"</span> <span class="na">label=</span><span class="s">"Price"</span> <span class="na">value=</span><span class="s">"{!v.selectedProperty.Price__c}"</span> <span class="na">class=</span><span class="s">"slds-size--1-of-2 slds-p-horizontal--x-small"</span> <span class="nt">/&gt;</span>
+                 <span class="nt">&lt;lightning:input</span> <span class="na">aura:id=</span><span class="s">"propStatus"</span> <span class="na">name=</span><span class="s">"propStatus"</span> <span class="na">label=</span><span class="s">"Status"</span> <span class="na">value=</span><span class="s">"{!v.selectedProperty.Status__c}"</span> <span class="na">class=</span><span class="s">"slds-size--1-of-2 slds-p-horizontal--x-small"</span> <span class="nt">/&gt;</span>
+             <span class="nt">&lt;/div&gt;</span>
+             <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"slds-modal__footer"</span><span class="nt">&gt;</span>
+                 <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"slds-button slds-button--neutral"</span> <span class="na">onclick=</span><span class="s">"{!c.toggleDialog}"</span><span class="nt">&gt;</span>Cancel<span class="nt">&lt;/button&gt;</span>
+                 <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"slds-button slds-button--brand"</span> <span class="na">onclick=</span><span class="s">"{!c.saveRecord}"</span><span class="nt">&gt;</span>Save<span class="nt">&lt;/button&gt;</span>
+             <span class="nt">&lt;/div&gt;</span>
+         <span class="nt">&lt;/div&gt;</span>
+     <span class="nt">&lt;/div&gt;</span>
+     <span class="nt">&lt;div</span> <span class="na">aura:id=</span><span class="s">"overlay"</span> <span class="na">class=</span><span class="s">"slds-backdrop"</span><span class="nt">&gt;&lt;/div&gt;</span>
+ <span class="nt">&lt;/aura:component&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Save the file.</li>
+  <li>Click the Controller tile to create <strong>SimilarPropertyEdit.js</strong>.</li>
+  <li>
+    <p>Replace the contents with the following:</p>
+
+    <div class="language-js highlighter-rouge"><pre class="highlight"><code> <span class="p">({</span>
+     <span class="na">getRecord</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">)</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">tempRec</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">"editRecord"</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.recordId"</span><span class="p">,</span> <span class="nx">component</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.remoteRecordId"</span><span class="p">));</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">reloadRecord</span><span class="p">();</span>
+     <span class="p">},</span>
+     <span class="na">toggleDialog</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">helper</span><span class="p">)</span> <span class="p">{</span>
+         <span class="nx">helper</span><span class="p">.</span><span class="nx">showHideModal</span><span class="p">(</span><span class="nx">component</span><span class="p">);</span>
+     <span class="p">},</span>
+     <span class="na">saveRecord</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">,</span><span class="nx">event</span><span class="p">,</span><span class="nx">helper</span><span class="p">)</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">propName</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'propName'</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.value"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">propBeds</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'propBeds'</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.value"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">propBaths</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'propBaths'</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.value"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">propPrice</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'propPrice'</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.value"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">propStatus</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'propStatus'</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="s2">"v.value"</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">tempRec</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">"editRecord"</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.Name"</span><span class="p">,</span> <span class="nx">propName</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.Name"</span><span class="p">,</span> <span class="nx">propBeds</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.Name"</span><span class="p">,</span> <span class="nx">propBaths</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.Name"</span><span class="p">,</span> <span class="nx">propPrice</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.Name"</span><span class="p">,</span> <span class="nx">propStatus</span><span class="p">);</span>
+         <span class="nx">tempRec</span><span class="p">.</span><span class="nx">saveRecord</span><span class="p">(</span><span class="nx">$A</span><span class="p">.</span><span class="nx">getCallback</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">){</span>
+             <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">state</span><span class="p">);</span>
+             <span class="kd">var</span> <span class="nx">event</span> <span class="o">=</span> <span class="nx">$A</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s2">"e.c:recordUpdated"</span><span class="p">);</span>
+             <span class="nx">event</span><span class="p">.</span><span class="nx">fire</span><span class="p">();</span>
+         <span class="p">}));</span>       
+         <span class="nx">helper</span><span class="p">.</span><span class="nx">showHideModal</span><span class="p">(</span><span class="nx">component</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">})</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Click the Helper tile to create <strong>SimilarPropertyEditHelper.js</strong>.</li>
+  <li>
+    <p>Replace the contents with:</p>
+
+    <div class="language-js highlighter-rouge"><pre class="highlight"><code> <span class="p">({</span>
+     <span class="na">showHideModal</span> <span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">component</span><span class="p">)</span> <span class="p">{</span>
+         <span class="kd">var</span> <span class="nx">modal</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">"editDialog"</span><span class="p">);</span>
+         <span class="nx">$A</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="nx">modal</span><span class="p">,</span> <span class="s1">'slds-fade-in-open'</span><span class="p">);</span>
+         <span class="kd">var</span> <span class="nx">overlay</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s2">"overlay"</span><span class="p">);</span>
+         <span class="nx">$A</span><span class="p">.</span><span class="nx">util</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="nx">overlay</span><span class="p">,</span> <span class="s1">'slds-backdrop--open'</span><span class="p">);</span>
+         <span class="nx">component</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s2">"v.showDialog"</span><span class="p">,</span> <span class="s2">"false"</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">})</span>
+</code></pre>
+    </div>
+  </li>
+  <li>In the Dev Console, create a <strong>Lightning Event</strong> (File &gt; New &gt; Lightning Event) with the name <strong>recordUpdated</strong>.</li>
+  <li>Switch back to the <strong>SimilarProperties.cmp</strong> tab.</li>
+  <li>
+    <p>Replace the line <code class="highlighter-rouge">&lt;aura:handler event="force:refreshView" action="{!c.doInit}" /&gt;</code> with the following:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;aura:handler</span> <span class="na">event=</span><span class="s">"c:recordUpdated"</span> <span class="na">action=</span><span class="s">"{!c.doSearch}"</span><span class="nt">/&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>
+    <p>Add a new line just before the closing <code class="highlighter-rouge">&lt;/lightning:card&gt;</code> (probably line 25) and paste the following:</p>
+
+    <div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;c:SimilarPropertyEdit</span> <span class="na">showDialog=</span><span class="s">"{!v.showDialog}"</span> <span class="na">remoteRecordId=</span><span class="s">"{!v.remoteRecordId}"</span> <span class="nt">/&gt;</span>
+</code></pre>
+    </div>
+  </li>
+  <li>Save the file(s).</li>
+  <li>Switch back to the Property Record Detail page.</li>
+  <li>Choose <strong>Edit page</strong> from the <strong>Setup</strong> icon.</li>
+  <li>Add a second copy of the <strong>Similar Properties</strong> component in the righthand column.</li>
+  <li>Set its <strong>Search Criteria</strong> to <strong>Beds</strong> (or price if the other copy of the component is set to Beds).</li>
+  <li>Save the page layout and click the back link to go back to the page.</li>
+  <li>Click the <strong>Edit</strong> icon for a property in either component and set the beds or price such that it will either appear or disappear from the other component instance.</li>
+</ol>
+
+<blockquote>
+  <p><strong>Not working as expected?</strong> The final implementation of the components for this exercise are available here:</p>
+  <h5 id="similarpropertyedit-component">SimilarPropertyEdit Component</h5>
+  <p><a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarPropertyEdit/SimilarPropertyEdit.cmp">SimilarPropertyEdit.cmp</a>, <a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarPropertyEdit/SimilarPropertyEditController.js">SimilarPropertyEditController.js</a>, <a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarPropertyEdit/SimilarPropertyEditHelper.js">SimilarPropertyEditHelper.js</a></p>
+  <h5 id="similarproperty-component">SimilarProperty Component</h5>
+  <p><a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarProperty/SimilarProperty.cmp">SimilarProperty.cmp</a>, <a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarProperty/SimilarPropertyController.js">SimilarPropertyController.js</a></p>
+  <h5 id="similarproperties-component">SimilarProperties Component</h5>
+  <p><a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarProperties/SimilarProperties.cmp">SimilarProperties.cmp</a>, <a href="https://github.com/developerforce/LightningNowWorkshop/blob/master/Exercise_6/src/aura/SimilarProperties/SimilarPropertiesController.js">SimilarPropertiesController.js</a>, <a href="https://raw.githubusercontent.com/developerforce/LightningNowWorkshop/master/Exercise_6/src/aura/SimilarProperties/SimilarPropertiesHelper.js">SimilarPropertiesHelper.js</a></p>
+
+  <p>Feel free to check it out or cut and paste it in your own component.</p>
+</blockquote>
+
+<div class="row" style="margin-top:40px;">
+<div class="col-sm-12">
+<a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_5.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Previous</a>
+<a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_7.html" class="btn btn-default pull-right">Next <i class="glyphicon glyphicon-chevron-right"></i></a>
+</div>
+</div>
+
+
+
+<!--         <div class="row" style="margin-top: 30px;">
+            <div class="col-xs-12">
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'salesforcelightningtutorial'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div> -->
+
+
+    </div>
+
+    <div class="col-xs-12 col-sm-4 right-nav">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="font-variant:small-caps;font-size: 18px;">exercises</div>
+            <h4 class="bump-right">Declarative Exercises</h4>
+            <ol class="list-group">
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d1.html">Setup your Salesforce Org</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d2.html">Evaluate Lightning, Create Permission Set &amp; Enable Lightning</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d3.html">Make your Classic App available in Lightning &amp; Explore Lightning Experience</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d4.html">Customize Business Processes and Report Charts</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_d5.html">Create a new Dreamhouse Lightning Console App</a></li>
+            </ol>
+            <h4 class="bump-right">Programmatic Exercises</h4>
+            <ol class="list-group">
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_1.html">Styling a Visualforce page for Lightning Experience</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_2.html">Conditionally Rendering Visualforce Pages for the Underlying UX Environment</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_3.html">Using a Visualforce Page as a Component in a Lightning Page</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_4.html">Creating a Hello World Lightning Component</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_5.html">Creating a “Similar Properties” Lightning Component</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_6.html">Leveraging force:recordPreview</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_7.html">Using Lightning Components Everywhere</a></li>
+                <li><a href="https://developerforce.github.io/LightningNowWorkshop/Exercise_8.html">Using Lightning Components in Visualforce</a></li>
+            </ol>
+            <hr>
+            <div style="margin: -8px 0 12px 14px">
+                <a href="https://developerforce.github.io/LightningNowWorkshop/next.html">Next Steps</a>
+            </div>
+        </div>
+<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" title="Twitter Tweet Button" src="./Lightning Now Workshop code 6 _files/tweet_button.5b6375bb17bd9edb2f4e7f8f12971999.en.html" style="position: static; visibility: visible; width: 75px; height: 28px;" data-url="http://developerforce.github.io/LightningAdoptionWorkshop"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="container">
+    <div id="footer">
+        <p class="text-muted">lightning<span class="sfdc">NOW</span>tour - 2017</p>
+    </div>    <!-- Site footer -->
+</div>
+
+
+<script src="./Lightning Now Workshop code 6 _files/jquery.js.download"></script>
+<script src="./Lightning Now Workshop code 6 _files/bootstrap.min.js.download"></script>
+
+
+
+<iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./Lightning Now Workshop code 6 _files/saved_resource.html"></iframe></body></html>
