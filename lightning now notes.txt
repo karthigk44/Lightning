@@ -1,0 +1,50 @@
+link to handson - bit.ly/lightninghandson
+karthi@lightningnow.com
+deployment tool --auto rabbit
+
+ - Metadata driven experience
+ - easy customization 
+ - Lightning pages
+	- Record pages --> record detail pages,can be assigned to profile,app,record type
+	- Home pages --> completely customizable
+	- App pages --> new app home pages
+ - new features roll out for lightning but not for classic in future
+ - Lightning specific apps cannot be converted to classic,but classic to lightning is possible
+ - client side UI layer
+ - in detail page only the default tab loads first and so that it will take less time to load page(Lazy loading like)
+ - can add flow component(default component) of Visual workflow
+ - custom domain used as namespace prefix for the components 
+ - console navigation available in lightning that is used in service cloud(check what is console)
+ - Utility bar- at bottom of the pages
+ - we can clone the classic app to create lightning app without affecting classic app
+ - Lightning pages per app --> unique detail pages for different apps for same object
+ - Lightning actions,Einstein customization
+ - Dynamic lightning pages  --> control visibility of components based on criteria(like workflow for UI)
+ - Custom lightning templates
+ - 
+Lightning components:
+
+- component->self contain and independent
+- Controller --> client side controls using Javascript
+- Helper --> similar to controller called from controller
+- Style --> css codes
+- Design --> used to custom set the attributes in the app builder page(The properties window that appear on the right side when we add component to  a page)
+- SVG --> used to set the icon for the component
+
+Component---->Controller(JS) ---->Apex controller -->fetch data and return to component
+action in controller --> initializing the method of the controller classic using component.get method
+callback --> get response and store in variable
+component.set --> set the response value to the expression in the component
+
+c. --> controller(For component, controller is JS and for JS, Controller is Apex controller.)
+v. --> view
+e. --> event
+
+Lightning data service --> reduce need of apex and JS to retrieve data to use in component
+	-uses the cached data of the record in the client side
+
+	
+Add more components to the Page;
+Utility Bar -->  components can be added
+Components can also be added to quick action buttons.
+Component used in VF page--> put the component in container app. called as lightning outa(can also be used in external sites)
